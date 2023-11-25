@@ -1,3 +1,50 @@
 ﻿@page "/"
+@using Blazorex;
 
-<h1>Hello, world!</h1>
+
+<CanvasManager @ref="_canvasManager" />
+
+@code
+{
+    CanvasManager _canvasManager;
+
+    static int scale = 15;
+    int _width = (64 * scale);
+    int _height = (32 * scale);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        _canvasManager.CreateCanvas("main", new CanvasCreationOptions()
+        {
+            Hidden = false,
+            Width = _width,
+            Height = _height,
+            OnCanvasReady = OnMainCanvasReady,
+            OnFrameReady = OnMainFrameReady,
+            OnKeyDown = OnKeyDown,
+            OnKeyUp = OnKeyUp,
+        });
+    }
+
+    private async void OnMainCanvasReady(CanvasBase canvasBase)
+    {
+    }
+
+    private void OnMainFrameReady(float timeStamp)
+    {
+    }
+
+    private void OnKeyUp(int index)
+    {
+    }
+
+    private void OnKeyDown(int index)
+    {
+    }
+}
+
