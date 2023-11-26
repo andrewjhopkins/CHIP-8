@@ -1,4 +1,4 @@
-Check out this [blog post](https://blog-gr10bw05z-andrewjhopkins.vercel.app/posts/chip-8) for details on implementation
+Check out this [blog post](https://www.andrewjhopkins.com/posts/chip-8) for details on implementation
 
 # CHIP-8
 An implementation of the [CHIP-8 spec](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM#font) using C# and Blazor. More information on CHIP-8 [here](https://en.wikipedia.org/wiki/CHIP-8)
