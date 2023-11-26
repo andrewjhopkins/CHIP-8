@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CHIP-8", "CHIP-8.csproj", "{959B3A3F-5C6C-4D43-9328-B6F5BB48B9C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{959B3A3F-5C6C-4D43-9328-B6F5BB48B9C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959B3A3F-5C6C-4D43-9328-B6F5BB48B9C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959B3A3F-5C6C-4D43-9328-B6F5BB48B9C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{959B3A3F-5C6C-4D43-9328-B6F5BB48B9C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D49C949-EAE7-4E4A-B950-E1A4013F4A9E}
+	EndGlobalSection
+EndGlobal
