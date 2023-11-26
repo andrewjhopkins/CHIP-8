@@ -1,16 +1,40 @@
 ﻿@page "/"
 @using Blazorex;
-
+@inject IJSRuntime JS
 
 <CanvasManager @ref="_canvasManager" />
 
 @code
 {
+    Processor _processor;
     CanvasManager _canvasManager;
+    IRenderContext _context;
 
     static int scale = 15;
     int _width = (64 * scale);
     int _height = (32 * scale);
+
+    static int speed = 10;
+
+    Dictionary<int, byte> keyMap = new Dictionary<int, byte>()
+    {
+        { 49, 0x1}, // 1
+        { 50, 0x2}, // 2
+        { 51, 0x3}, // 3
+        { 52, 0xc}, // 4
+        { 81, 0x4}, // Q
+        { 87, 0x5}, // W
+        { 69, 0x6}, // E
+        { 82, 0xD}, // R
+        { 65, 0x7}, // A
+        { 83, 0x8}, // S
+        { 68, 0x9}, // D
+        { 70, 0xE}, // F
+        { 90, 0xA}, // Z
+        { 88, 0x0}, // X
+        { 67, 0xB}, // C
+        { 86, 0xF}, // V
+    };
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -33,18 +57,72 @@
 
     private async void OnMainCanvasReady(CanvasBase canvasBase)
     {
+        _processor = new Processor(false, this.PlaySound, speed);
+        var byteArray = await GetRomData();
+        _processor.LoadRom(byteArray);
+
+        _context = canvasBase.RenderContext;
+        _context.FillStyle = "rgb(255, 255, 255)";
+        _context.LineWidth = 1;
     }
 
     private void OnMainFrameReady(float timeStamp)
     {
+        for (var i = 0; i < speed; i++)
+        {
+            _processor?.Cycle();
+        }
+
+        Render();
     }
 
     private void OnKeyUp(int index)
     {
+        if (keyMap.TryGetValue(index, out byte value))
+        {
+            _processor?.OnKeyUp(value);
+        }
     }
 
     private void OnKeyDown(int index)
     {
+        if (keyMap.TryGetValue(index, out byte value))
+        {
+            _processor?.OnKeyDown(value);
+        }
+    }
+
+    private async Task<byte[]> GetRomData()
+    {
+        var client = new HttpClient();
+        var byteArray = await client.GetByteArrayAsync("https://localhost:7276/tetris");
+        return byteArray;
+    }
+
+    private async Task PlaySound()
+    {
+        await JS.InvokeAsync<string>("PlaySound"); // this calls "window.PlaySound()"
+    }
+
+    private void Render()
+    {
+        var buffer = _processor?.Pixels;
+
+        if (buffer != null)
+        {
+            _context.ClearRect(0, 0, _width, _height);
+
+            for (int y = 0; y < 32; y++)
+            {
+                for (int x = 0; x < 64; x++)
+                {
+                    if (buffer[y * 64 + x])
+                    {
+                        _context.FillRect(x * scale, y * scale, 1 * scale, 1 * scale);
+                    }
+                }
+            }
+        }
     }
 }
 
