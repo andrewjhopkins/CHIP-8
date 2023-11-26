@@ -13,7 +13,6 @@
     static int scale = 15;
     int _width = (64 * scale);
     int _height = (32 * scale);
-
     static int speed = 10;
 
     Dictionary<int, byte> keyMap = new Dictionary<int, byte>()
@@ -44,22 +43,21 @@
         }
 
         _canvasManager.CreateCanvas("main", new CanvasCreationOptions()
-        {
-            Hidden = false,
-            Width = _width,
-            Height = _height,
-            OnCanvasReady = OnMainCanvasReady,
-            OnFrameReady = OnMainFrameReady,
-            OnKeyDown = OnKeyDown,
-            OnKeyUp = OnKeyUp,
-        });
+            {
+                Hidden = false,
+                Width = _width,
+                Height = _height,
+                OnCanvasReady = OnMainCanvasReady,
+                OnFrameReady = OnMainFrameReady,
+                OnKeyDown = OnKeyDown,
+                OnKeyUp = OnKeyUp,
+            });
     }
 
     private async void OnMainCanvasReady(CanvasBase canvasBase)
     {
-        _processor = new Processor(false, this.PlaySound, speed);
-        var byteArray = await GetRomData();
-        _processor.LoadRom(byteArray);
+        var romData = await GetRomData();
+        _processor = new Processor(romData, false, this.PlaySound, speed);
 
         _context = canvasBase.RenderContext;
         _context.FillStyle = "rgb(255, 255, 255)";
@@ -92,18 +90,6 @@
         }
     }
 
-    private async Task<byte[]> GetRomData()
-    {
-        var client = new HttpClient();
-        var byteArray = await client.GetByteArrayAsync("https://localhost:7276/tetris");
-        return byteArray;
-    }
-
-    private async Task PlaySound()
-    {
-        await JS.InvokeAsync<string>("PlaySound"); // this calls "window.PlaySound()"
-    }
-
     private void Render()
     {
         var buffer = _processor?.Pixels;
@@ -124,5 +110,16 @@
             }
         }
     }
-}
 
+    private async Task<byte[]> GetRomData()
+    {
+        var client = new HttpClient();
+        var byteArray = await client.GetByteArrayAsync("https://localhost:7276/ibm");
+        return byteArray;
+    }
+
+    public async Task PlaySound()
+    {
+        await JS.InvokeAsync<string>("PlaySound"); // this calls "window.PlaySound()"
+    }
+}

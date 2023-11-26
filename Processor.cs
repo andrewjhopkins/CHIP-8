@@ -21,7 +21,7 @@
         private int Speed { get; set; }
         private int Counter { get; set; }
 
-        public Processor(bool wrapAround, Func<Task> playSound, int speed)
+        public Processor(byte[] romData, bool wrapAround, Func<Task> playSound, int speed)
         {
             Pixels = new bool[2048];
 
@@ -50,6 +50,7 @@
             Speed = speed;
             Counter = 0;
 
+            LoadRom(romData);
             LoadFonts();
         }
 
