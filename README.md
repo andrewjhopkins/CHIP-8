@@ -5,7 +5,7 @@ An implementation of the [CHIP-8 spec](http://devernay.free.fr/hacks/chip8/C8TEC
 
 ![CHIP-8 running the IBM rom in the browser](chip8_ibm.png "CHIP-8 IBM")
 
-I wrote this to better understand how emulators work as well as gain more experience with binary and hexcodes. 
+I wrote this to better understand how emulators work as well as gain more experience with binary and hexadecimal. 
 *Most likely not bug free.*
 
 ### Dependencies
